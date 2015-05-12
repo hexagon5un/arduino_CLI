@@ -1,6 +1,8 @@
 Notes on my experiments with creating a Makefile to replicate the Arduino build chain (as of 1.6.4).  Works for me.  :)
 
-Basically, what I did was to set up verbose logging in the Arduino IDE, copy the log files over, figure out what it was doing, and mimic it.
+Basically, what I did was to set up verbose logging in the Arduino IDE, copy the log files over, figure out what it was doing, and mimic it.  
+
+The bash script `makefile_shell_version.sh` does just that, and is probably most readable if you're interested in what it took.  OTOH, the `Makefile` should be easier/quicker to make work on your system with less editing.
 
 
 ## Summary 
@@ -26,4 +28,5 @@ This is all a rough draft, but if it works (or doesn't) for you, let me know.
 
 ## Context
 
-This came out of a talk I gave ("Doing Arduino without the Arduino").  Slides attached as PDF, for what that's worth.
+This came out of a talk I gave ("Doing Arduino without the Arduino").  Slides attached as PDF.  You kinda had to be there, though.
+
