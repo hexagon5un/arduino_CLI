@@ -24,3 +24,6 @@ The only bit that isn't straight out of the log file is the conversion from `.in
 
 This is all a rough draft, but if it works (or doesn't) for you, let me know.  
 
+## Context
+
+This came out of a talk I gave ("Doing Arduino without the Arduino").  Slides attached as PDF, for what that's worth.
