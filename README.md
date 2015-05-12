@@ -7,7 +7,7 @@ The bash script `makefile_shell_version.sh` does just that, and is probably most
 
 ## Summary 
 
-The IDE compiles everything in the core (`.c` and `.cpp` files) and throws them all into a big library function, `core.a`.
+The Arduino IDE compiles everything in the core (`.c` and `.cpp` files) and throws them all into a big library function, `core.a`.
 
 Your code (or the `Blink.ino` stand-in here) is then converted into a compilable `.cpp` file, compiled, and linked against the `core.a` library.  
 
@@ -16,7 +16,7 @@ To flash this into the Arduino, it's converted to an Intel hex file and passed o
 
 ## .ino to .cpp
 
-The only bit that isn't straight out of the log file is the conversion from `.ino` to `.cpp`.  This, I got from comparing the two files as the IDE processes them.  The IDE seems to do the following:
+The only part of this process that wasn't visible in the log file is the conversion from `.ino` to `.cpp`, so I just compared `Blink.ino` with `Blink.cpp`.  The differences are straightforward.  The IDE seems to do the following:
 
 1. add `include "Arduino.h"`
 2. add prototype declarations for each function in the .ino file, in this case `setup()` and `loop()`  
