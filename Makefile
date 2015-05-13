@@ -12,7 +12,12 @@
 TARGET=Blink
 
 ## The location of my arduino install.  This will probably be different for you.
+
+# Linux
 ARDUINO_INSTALL = /usr/share/arduino
+
+# MacOS X
+# ARDUINO_INSTALL = /Applications/Arduino.app/Contents/Java
 
 ## These are standard subdirectories in Arduino.  This should work.
 ARDUINO_TOOLS   = $(ARDUINO_INSTALL)/hardware/tools/avr/bin/
