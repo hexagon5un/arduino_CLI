@@ -20,7 +20,7 @@ ARDUINO_INSTALL = /usr/share/arduino
 # ARDUINO_INSTALL = /Applications/Arduino.app/Contents/Java
 
 ## These are standard subdirectories in Arduino.  This should work.
-ARDUINO_TOOLS   = $(ARDUINO_INSTALL)/hardware/tools/avr/bin/
+ARDUINO_TOOLS   = $(ARDUINO_INSTALL)/hardware/tools/avr/bin
 CORE            = $(ARDUINO_INSTALL)/hardware/arduino/avr/cores/arduino
 VARIANT         = $(ARDUINO_INSTALL)/hardware/arduino/avr/variants/standard
 
@@ -54,6 +54,7 @@ CXXFLAGS = -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -fno
 
 
 ############################## You shouldn't have to edit anything below here
+############################## because this is where the action's at.
 
 ## This sets up a virtual path to the core library
 VPATH=$(CORE)
@@ -67,10 +68,14 @@ HEADERS=$(wildcard $(CORE)/*.h) $(VARIANT)/pins_arduino.h
 all: $(TARGET).hex core.a
 
 ## Build Arduino core library from all of the object files
-## This is kinda dumb, because it leaves all the local object files around too
-## Type "make clean" if that bugs you, but then you'll have to re-build core.a next time
-core.a: $(LOCAL_OBJECTS)
+## Only rebuilds core when its source changes, cleans up the related object files
+## If you want to force a core rebuild, just remove core.a
+core.a: $(SOURCES) 
+	@echo "---------- Rebuilding the core library"
+	$(MAKE) $(LOCAL_OBJECTS)
 	$(AR) rcs core.a $(LOCAL_OBJECTS)
+	rm -f $(LOCAL_OBJECTS:.o=.d)
+	rm -f $(LOCAL_OBJECTS)
 
 ## The Arduino .ino file is just a cpp file without the include files and function prototypes
 ## If you've defined other functions or linked to other libraries, you'll need to add them manually.
@@ -87,7 +92,7 @@ $(TARGET).o: $(TARGET).cpp
 # Link target object against core.a library
 $(TARGET).elf: $(TARGET).o core.a
 	@echo "---------- Linking $< to core library"
-	avr-gcc -w -Os -Wl,--gc-sections -mmcu=$(MCU) -o $@ $< core.a -L. -lm	
+	$(CC) -w -Os -Wl,--gc-sections -mmcu=$(MCU) -o $@ $< core.a -L. -lm	
 
 %.hex: %.elf
 	@echo "---------- Creating hex file: $@"
